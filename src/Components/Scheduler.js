@@ -15,20 +15,16 @@ import {
   AppointmentTooltip,
   TodayButton,
 } from "@devexpress/dx-react-scheduler-material-ui";
-
 const PREFIX = "Demo";
-
 const classes = {
   toolbarRoot: `${PREFIX}-toolbarRoot`,
   progress: `${PREFIX}-progress`,
 };
-
 const StyledDiv = styled("div")({
   [`&.${classes.toolbarRoot}`]: {
     position: "relative",
   },
 });
-
 const StyledLinearProgress = styled(LinearProgress)(() => ({
   [`&.${classes.progress}`]: {
     position: "absolute",
@@ -37,14 +33,9 @@ const StyledLinearProgress = styled(LinearProgress)(() => ({
     left: 0,
   },
 }));
-
-// const PUBLIC_KEY = 'AIzaSyBnNAISIUKe6xdhq1_rjor2rxoI3UlMY7k';
-// const CALENDAR_ID = 'f7jnetm22dsjc3npc2lu3buvu4@group.calendar.google.com';
-
 const getData = (setData, setLoading) => {
   const dataUrl = ["https://62d8f5b2908831393597b00b.mockapi.io/api/events"];
   setLoading(true);
-
   return fetch(dataUrl)
     .then((response) => response.json())
     .then((res) => {
@@ -54,28 +45,24 @@ const getData = (setData, setLoading) => {
       }, 600);
     });
 };
-
 const ToolbarWithLoading = ({ children, ...restProps }) => (
   <StyledDiv className={classes.toolbarRoot}>
     <Toolbar.Root {...restProps}>{children}</Toolbar.Root>
     <StyledLinearProgress className={classes.progress} />
   </StyledDiv>
 );
-
 const mapAppointmentData = (appointment) => ({
   id: appointment.id,
   startDate: appointment.startDate,
   endDate: appointment.endDate,
   title: appointment.title,
 });
-
 const initialState = {
   data: [],
   loading: false,
   currentDate: "2022-07-11",
   currentViewName: "Week",
 };
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "setLoading":
@@ -90,7 +77,6 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
 export default () => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { data, loading, currentViewName, currentDate } = state;
@@ -126,11 +112,9 @@ export default () => {
       }),
     [dispatch]
   );
-
   React.useEffect(() => {
     getData(setData, setLoading);
   }, [setData, currentViewName, currentDate]);
-
   return (
       <Scheduler data={data} height={660}>
         <ViewState
